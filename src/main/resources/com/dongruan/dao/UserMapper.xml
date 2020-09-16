@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dongruan.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.dongruan.bean.User">
+    <id column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="userSex" jdbcType="INTEGER" property="usersex" />
+    <result column="delTag" jdbcType="INTEGER" property="deltag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dongruan.bean.User">
+    <result column="userImg" jdbcType="LONGVARCHAR" property="userimg" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userId, `password`, userName, userSex, delTag
+  </sql>
+  <sql id="Blob_Column_List">
+    userImg
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.dongruan.bean.UserExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.dongruan.bean.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    where userId = #{userid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where userId = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dongruan.bean.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dongruan.bean.User">
+    insert into user (userId, `password`, userName, 
+      userSex, delTag, userImg
+      )
+    values (#{userid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{usersex,jdbcType=INTEGER}, #{deltag,jdbcType=INTEGER}, #{userimg,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dongruan.bean.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="usersex != null">
+        userSex,
+      </if>
+      <if test="deltag != null">
+        delTag,
+      </if>
+      <if test="userimg != null">
+        userImg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="usersex != null">
+        #{usersex,jdbcType=INTEGER},
+      </if>
+      <if test="deltag != null">
+        #{deltag,jdbcType=INTEGER},
+      </if>
+      <if test="userimg != null">
+        #{userimg,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dongruan.bean.UserExample" resultType="java.lang.Long">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        `password` = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null">
+        userName = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usersex != null">
+        userSex = #{record.usersex,jdbcType=INTEGER},
+      </if>
+      <if test="record.deltag != null">
+        delTag = #{record.deltag,jdbcType=INTEGER},
+      </if>
+      <if test="record.userimg != null">
+        userImg = #{record.userimg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update user
+    set userId = #{record.userid,jdbcType=VARCHAR},
+      `password` = #{record.password,jdbcType=VARCHAR},
+      userName = #{record.username,jdbcType=VARCHAR},
+      userSex = #{record.usersex,jdbcType=INTEGER},
+      delTag = #{record.deltag,jdbcType=INTEGER},
+      userImg = #{record.userimg,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set userId = #{record.userid,jdbcType=VARCHAR},
+      `password` = #{record.password,jdbcType=VARCHAR},
+      userName = #{record.username,jdbcType=VARCHAR},
+      userSex = #{record.usersex,jdbcType=INTEGER},
+      delTag = #{record.deltag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dongruan.bean.User">
+    update user
+    <set>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="usersex != null">
+        userSex = #{usersex,jdbcType=INTEGER},
+      </if>
+      <if test="deltag != null">
+        delTag = #{deltag,jdbcType=INTEGER},
+      </if>
+      <if test="userimg != null">
+        userImg = #{userimg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dongruan.bean.User">
+    update user
+    set `password` = #{password,jdbcType=VARCHAR},
+      userName = #{username,jdbcType=VARCHAR},
+      userSex = #{usersex,jdbcType=INTEGER},
+      delTag = #{deltag,jdbcType=INTEGER},
+      userImg = #{userimg,jdbcType=LONGVARCHAR}
+    where userId = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dongruan.bean.User">
+    update user
+    set `password` = #{password,jdbcType=VARCHAR},
+      userName = #{username,jdbcType=VARCHAR},
+      userSex = #{usersex,jdbcType=INTEGER},
+      delTag = #{deltag,jdbcType=INTEGER}
+    where userId = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>

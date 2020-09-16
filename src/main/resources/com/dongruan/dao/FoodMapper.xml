@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dongruan.dao.FoodMapper">
+  <resultMap id="BaseResultMap" type="com.dongruan.bean.Food">
+    <id column="foodId" jdbcType="INTEGER" property="foodid" />
+    <result column="foodName" jdbcType="VARCHAR" property="foodname" />
+    <result column="foodExplain" jdbcType="VARCHAR" property="foodexplain" />
+    <result column="foodPrice" jdbcType="DECIMAL" property="foodprice" />
+    <result column="businessId" jdbcType="INTEGER" property="businessid" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dongruan.bean.Food">
+    <result column="foodImg" jdbcType="LONGVARCHAR" property="foodimg" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    foodId, foodName, foodExplain, foodPrice, businessId, remarks
+  </sql>
+  <sql id="Blob_Column_List">
+    foodImg
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.dongruan.bean.FoodExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from food
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.dongruan.bean.FoodExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from food
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from food
+    where foodId = #{foodid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from food
+    where foodId = #{foodid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dongruan.bean.FoodExample">
+    delete from food
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dongruan.bean.Food">
+    insert into food (foodId, foodName, foodExplain, 
+      foodPrice, businessId, remarks, 
+      foodImg)
+    values (#{foodid,jdbcType=INTEGER}, #{foodname,jdbcType=VARCHAR}, #{foodexplain,jdbcType=VARCHAR}, 
+      #{foodprice,jdbcType=DECIMAL}, #{businessid,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
+      #{foodimg,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dongruan.bean.Food">
+    insert into food
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="foodid != null">
+        foodId,
+      </if>
+      <if test="foodname != null">
+        foodName,
+      </if>
+      <if test="foodexplain != null">
+        foodExplain,
+      </if>
+      <if test="foodprice != null">
+        foodPrice,
+      </if>
+      <if test="businessid != null">
+        businessId,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="foodimg != null">
+        foodImg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="foodid != null">
+        #{foodid,jdbcType=INTEGER},
+      </if>
+      <if test="foodname != null">
+        #{foodname,jdbcType=VARCHAR},
+      </if>
+      <if test="foodexplain != null">
+        #{foodexplain,jdbcType=VARCHAR},
+      </if>
+      <if test="foodprice != null">
+        #{foodprice,jdbcType=DECIMAL},
+      </if>
+      <if test="businessid != null">
+        #{businessid,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="foodimg != null">
+        #{foodimg,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dongruan.bean.FoodExample" resultType="java.lang.Long">
+    select count(*) from food
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update food
+    <set>
+      <if test="record.foodid != null">
+        foodId = #{record.foodid,jdbcType=INTEGER},
+      </if>
+      <if test="record.foodname != null">
+        foodName = #{record.foodname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodexplain != null">
+        foodExplain = #{record.foodexplain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodprice != null">
+        foodPrice = #{record.foodprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.businessid != null">
+        businessId = #{record.businessid,jdbcType=INTEGER},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodimg != null">
+        foodImg = #{record.foodimg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update food
+    set foodId = #{record.foodid,jdbcType=INTEGER},
+      foodName = #{record.foodname,jdbcType=VARCHAR},
+      foodExplain = #{record.foodexplain,jdbcType=VARCHAR},
+      foodPrice = #{record.foodprice,jdbcType=DECIMAL},
+      businessId = #{record.businessid,jdbcType=INTEGER},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      foodImg = #{record.foodimg,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update food
+    set foodId = #{record.foodid,jdbcType=INTEGER},
+      foodName = #{record.foodname,jdbcType=VARCHAR},
+      foodExplain = #{record.foodexplain,jdbcType=VARCHAR},
+      foodPrice = #{record.foodprice,jdbcType=DECIMAL},
+      businessId = #{record.businessid,jdbcType=INTEGER},
+      remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dongruan.bean.Food">
+    update food
+    <set>
+      <if test="foodname != null">
+        foodName = #{foodname,jdbcType=VARCHAR},
+      </if>
+      <if test="foodexplain != null">
+        foodExplain = #{foodexplain,jdbcType=VARCHAR},
+      </if>
+      <if test="foodprice != null">
+        foodPrice = #{foodprice,jdbcType=DECIMAL},
+      </if>
+      <if test="businessid != null">
+        businessId = #{businessid,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="foodimg != null">
+        foodImg = #{foodimg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where foodId = #{foodid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dongruan.bean.Food">
+    update food
+    set foodName = #{foodname,jdbcType=VARCHAR},
+      foodExplain = #{foodexplain,jdbcType=VARCHAR},
+      foodPrice = #{foodprice,jdbcType=DECIMAL},
+      businessId = #{businessid,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      foodImg = #{foodimg,jdbcType=LONGVARCHAR}
+    where foodId = #{foodid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dongruan.bean.Food">
+    update food
+    set foodName = #{foodname,jdbcType=VARCHAR},
+      foodExplain = #{foodexplain,jdbcType=VARCHAR},
+      foodPrice = #{foodprice,jdbcType=DECIMAL},
+      businessId = #{businessid,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where foodId = #{foodid,jdbcType=INTEGER}
+  </update>
+</mapper>
