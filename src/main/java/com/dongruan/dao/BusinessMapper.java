@@ -3,8 +3,12 @@ package com.dongruan.dao;
 import com.dongruan.bean.Business;
 import com.dongruan.bean.BusinessExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+
+@Mapper
 public interface BusinessMapper {
     long countByExample(BusinessExample example);
 
