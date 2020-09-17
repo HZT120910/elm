@@ -3,6 +3,7 @@ package com.dongruan.controller;
 import com.dongruan.bean.Business;
 import com.dongruan.dao.BusinessMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
