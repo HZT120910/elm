@@ -14,7 +14,7 @@ public class Msg {
     //携带的信息
     private String msg;
     //
-    private Map<String,Object> extend = new HashMap<>();
+    private Map<String,Object> data = new HashMap<>();
 
 
     public static Msg success(){
@@ -32,7 +32,7 @@ public class Msg {
     }
 
     public Msg add(String Key, Object value){
-        this.getExtend().put(Key, value);
+        this.getData().put(Key, value);
         return this;
     }
     public Integer getCode() {
@@ -51,11 +51,11 @@ public class Msg {
         this.msg = msg;
     }
 
-    public Map<String, Object> getExtend() {
-        return extend;
+    public Map<String, Object> getData() {
+        return data;
     }
 
-    public void setExtend(Map<String, Object> extend) {
-        this.extend = extend;
+    public void setData(Map<String, Object> data) {
+        this.data = data;
     }
 }

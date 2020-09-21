@@ -4,6 +4,7 @@ package com.dongruan.controller;
 import com.dongruan.bean.Business;
 import com.dongruan.bean.Msg;
 import com.dongruan.dao.BusinessMapper;
+import com.dongruan.service.BusinessServise;
 import com.dongruan.util.BaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,37 +21,38 @@ import java.util.List;
 @RequestMapping("business")
 public class BusinessController {
     @Autowired
-    private BusinessMapper businessMapper;
+    private BusinessServise businessServise;
 
-    @GetMapping("get/{id}")
-    public Business getBusiness(@PathVariable("id")Integer id){
-        Business business = businessMapper.selectByPrimaryKey(id);
-        System.out.println(business);
-        return business;
+    @GetMapping("/getbyid/{id}")
+    public Msg getBusiness(@PathVariable("id")Integer id){
+        Business business = businessServise.getBusinessById(id);
+        return new Msg().success().add("business", business);
     }
 
-    @GetMapping("get")
+    @GetMapping()
     public Msg getAllBusiness(){
-        List<Business> businesses = businessMapper.selectByExampleWithBLOBs(null);
-        System.out.println(businesses);
-        return new Msg().add("businesses", businesses).success();
+        List<Business> businesses = businessServise.showAllBusniess();
+        return new Msg().success().add("businesses", businesses);
     }
 
-    @PostMapping("picture")
-    public String PicTest(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        System.out.println(multipartFile.getOriginalFilename());
-        multipartFile.transferTo(new File("E:\\图片资源\\600.jpg"));
-        File file = new File("E:\\图片资源\\600.jpg");
-        System.out.println(BaseUtils.getBase64String(file));
-        return new String();
+//    @PostMapping("picture")
+//    public String PicTest(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+//        System.out.println(multipartFile.getOriginalFilename());
+//        multipartFile.transferTo(new File("E:\\图片资源\\600.jpg"));
+//        File file = new File("E:\\图片资源\\600.jpg");
+//        System.out.println(BaseUtils.getBase64String(file));
+//        return new String();
+//
+//    }
 
+    @GetMapping("getbytype/{type}")
+    public Msg getBusinessByType(@PathVariable("type")String type){
+        List<Business> businesses = businessServise.showBusinessbyBusinessExplain(type);
+        return new Msg().success().add("businesses", businesses);
     }
 
 
-
-
-
-    @GetMapping("/test")
+    @PostMapping()
     public String ttt(){
         return "ok";
     }

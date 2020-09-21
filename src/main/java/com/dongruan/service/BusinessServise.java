@@ -2,6 +2,7 @@ package com.dongruan.service;
 
 import com.dongruan.bean.Business;
 import com.dongruan.bean.Food;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @author shkstart
  * @create 2020-09-17 10:46
  */
+
 public interface BusinessServise {
 
     /**
@@ -47,6 +49,13 @@ public interface BusinessServise {
      * @return
      */
     int addBusiness(Business business);
+
+    /**
+     * id查询商家
+     * @param businessid
+     * @return
+     */
+    Business getBusinessById(Integer businessid);
 
 
 
