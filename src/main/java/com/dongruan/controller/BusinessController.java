@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @create 2020-09-16 14:35
  */
 @RestController
+@RequestMapping("business")
 public class BusinessController {
     @Autowired
     private BusinessMapper businessMapper;
