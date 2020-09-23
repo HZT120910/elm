@@ -1,5 +1,6 @@
 package com.dongruan.bean;
 
+import io.swagger.annotations.ApiModel;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;

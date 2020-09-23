@@ -9,3 +9,4 @@ spring:
 #配置mybatis
 mybatis:
   mapper-locations: classpath:com/dongruan/dao/*.xml
+

@@ -6,6 +6,9 @@ import com.dongruan.bean.Msg;
 import com.dongruan.dao.BusinessMapper;
 import com.dongruan.service.BusinessServise;
 import com.dongruan.util.BaseUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +23,7 @@ import java.util.Random;
  */
 @RestController
 @RequestMapping("business")
+@Api(tags = "商家的Controller类")
 public class BusinessController {
     @Autowired
     private BusinessServise businessServise;
@@ -30,7 +34,8 @@ public class BusinessController {
      * @return
      */
     @GetMapping("/getbyid/{id}")
-    public Msg getBusiness(@PathVariable("id")Integer id){
+    @ApiOperation("通过id查询商家")
+    public Msg getBusiness(@ApiParam("商家id") @PathVariable("id")Integer id){
         Business business = businessServise.getBusinessById(id);
         return new Msg().success().add("business", business);
     }
@@ -40,6 +45,7 @@ public class BusinessController {
      * @return
      */
     @GetMapping()
+    @ApiOperation("查询全部商家")
     public Msg getAllBusiness(){
         List<Business> businesses = businessServise.showAllBusniess();
         return Msg.success().add("businesses", businesses);
@@ -52,6 +58,7 @@ public class BusinessController {
      * @throws IOException
      */
     @PostMapping()
+    @ApiOperation("添加一个商家")
     public Msg addbusiness(Business business,MultipartFile multipartFile )throws IOException {
         //先把上传的文件保存到E盘这个目录下
         String fileName = System.currentTimeMillis()+ new Random().nextInt(9999)+".jpg";
@@ -72,14 +79,16 @@ public class BusinessController {
      * @return
      */
     @GetMapping("getbytype/{type}")
+    @ApiOperation("通过分类获取商家")
     public Msg getBusinessByType(@PathVariable("type")String type){
         List<Business> businesses = businessServise.showBusinessbyBusinessExplain(type);
         return Msg.success().add("businesses", businesses);
     }
 
 
-    @PutMapping
-    public Msg updateBusiness(Business business,MultipartFile multipartFile) throws IOException {
+    @PutMapping("{id}")
+    @ApiOperation("通过id更新一个商家")
+    public Msg updateBusiness(@ApiParam("传入商家id")@PathVariable("id") Integer businessid, Business business,MultipartFile multipartFile) throws IOException {
         //先把上传的文件保存到E盘这个目录下
         String fileName = System.currentTimeMillis()+ new Random().nextInt(9999)+".jpg";
         multipartFile.transferTo(new File("E:\\图片资源\\"+fileName));
@@ -87,11 +96,13 @@ public class BusinessController {
         //把文件转成base64编码的字符串
         String base64String = BaseUtils.getBase64String(file);
         business.setBusinessimg(base64String);
+        business.setBusinessid(businessid);
         businessServise.updataBusiness(business);
         return Msg.success();
 
     }
     @DeleteMapping("{id}")
+    @ApiOperation("通过id删除一个商家")
     public Msg deleteBusiness(@PathVariable("id") Integer businessid){
         businessServise.deleteBusiness(businessid);
         return Msg.success();
