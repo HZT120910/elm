@@ -284,4 +284,8 @@
       remarks = #{remarks,jdbcType=VARCHAR}
     where foodId = #{foodid,jdbcType=INTEGER}
   </update>
+  
+  <select id="findFoodsByBusinessId" resultType="com.dongruan.bean.Food">
+    select * from food where businessId = #{businessId};
+  </select>
 </mapper>

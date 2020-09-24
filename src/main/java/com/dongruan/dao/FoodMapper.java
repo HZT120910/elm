@@ -33,4 +33,6 @@ public interface FoodMapper {
     int updateByPrimaryKeyWithBLOBs(Food record);
 
     int updateByPrimaryKey(Food record);
+
+    List<Food> findFoodsByBusinessId(Integer businessId);
 }

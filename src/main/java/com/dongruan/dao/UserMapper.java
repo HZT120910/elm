@@ -5,6 +5,8 @@ import com.dongruan.bean.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+import javax.print.DocFlavor;
+
 public interface UserMapper {
     long countByExample(UserExample example);
 
@@ -33,4 +35,6 @@ public interface UserMapper {
     int updateByPrimaryKeyWithBLOBs(User record);
 
     int updateByPrimaryKey(User record);
+
+    List<User> findUserByUseranme(String username);
 }

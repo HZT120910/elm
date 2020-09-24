@@ -267,4 +267,8 @@
       delTag = #{deltag,jdbcType=INTEGER}
     where userId = #{userid,jdbcType=VARCHAR}
   </update>
+
+  <select id="findUserByUseranme" resultType="com.dongruan.bean.User">
+    select * from user where userName=#{username};
+  </select>
 </mapper>

@@ -59,7 +59,7 @@ public class BusinessController {
      */
     @PostMapping()
     @ApiOperation("添加一个商家")
-    public Msg addbusiness(Business business,MultipartFile multipartFile )throws IOException {
+    public Msg addbusiness(Business business,MultipartFile multipartFile) throws IOException {
         //先把上传的文件保存到E盘这个目录下
         String fileName = System.currentTimeMillis()+ new Random().nextInt(9999)+".jpg";
         System.out.println(business);
