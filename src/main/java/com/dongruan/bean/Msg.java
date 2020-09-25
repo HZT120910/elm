@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class Msg {
 
-    //状态码100-成功 200-失败
+
     private Integer code;
     //携带的信息
     private String msg;
@@ -19,14 +19,14 @@ public class Msg {
 
     public static Msg success(){
         Msg msg = new Msg();
-        msg.setCode(100);
+        msg.setCode(200);
         msg.setMsg("请求成功");
         return msg;
     }
 
     public static Msg fail(){
         Msg msg = new Msg();
-        msg.setCode(200);
+        msg.setCode(500);
         msg.setMsg("请求失败");
         return msg;
     }

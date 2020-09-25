@@ -4,7 +4,9 @@ import com.dongruan.bean.Orders;
 import com.dongruan.bean.OrdersExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface OrdersMapper {
     long countByExample(OrdersExample example);
 

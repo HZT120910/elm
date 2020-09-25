@@ -193,4 +193,8 @@
       quantity = #{quantity,jdbcType=INTEGER}
     where odId = #{odid,jdbcType=INTEGER}
   </update>
+
+  <select id="getOrderDetailsExt" resultType="com.dongruan.bean.OrderDetailsExt">
+   SELECT o.odId,o.orderId,o.foodId,o.quantity,f.foodImg,os.userId FROM orderdetailet o left join food f on o.foodId=f.foodId left join orders os on os.orderId = o.orderId where o.orderId=#{orderid} and userId=#{userid};
+  </select>
 </mapper>

@@ -28,7 +28,7 @@ public class BusinessServiceImpl implements BusinessServise {
 
     @Override
     public List<Business> showBusinessbyBusinessExplain(String businessExplain) {
-        Objects.requireNonNull(businessExplain);
+//        Objects.requireNonNull(businessExplain);
         BusinessExample businessExample = new BusinessExample();
         Criteria criteria = businessExample.createCriteria();
         criteria.andBusinessexplainEqualTo(businessExplain);
@@ -38,28 +38,28 @@ public class BusinessServiceImpl implements BusinessServise {
 
     @Override
     public int updataBusiness(Business business) {
-        NonullUtils.PredicateUtil(business.getBusinessaddress(),business.getBusinessexplain(),business.getBusinessid(),business.getBusinessimg(),business.getBusinessname(),business.getStarprice(),business.getDeliveryprice());
+//        NonullUtils.PredicateUtil(business.getBusinessaddress(),business.getBusinessexplain(),business.getBusinessid(),business.getBusinessimg(),business.getBusinessname(),business.getStarprice(),business.getDeliveryprice());
         int i = businessMapper.updateByPrimaryKeyWithBLOBs(business);
         return i;
     }
 
     @Override
     public int deleteBusiness(Integer businessid) {
-        Objects.requireNonNull(businessid);
+//        Objects.requireNonNull(businessid);
         int i = businessMapper.deleteByPrimaryKey(businessid);
         return i;
     }
 
     @Override
     public int addBusiness(Business business) {
-        NonullUtils.PredicateUtil(business.getBusinessaddress(),business.getBusinessexplain(),business.getBusinessid(),business.getBusinessimg(),business.getBusinessname(),business.getStarprice(),business.getDeliveryprice());
+//        NonullUtils.PredicateUtil(business.getBusinessaddress(),business.getBusinessexplain(),business.getBusinessid(),business.getBusinessimg(),business.getBusinessname(),business.getStarprice(),business.getDeliveryprice());
         int insert = businessMapper.insert(business);
         return insert;
     }
 
     @Override
     public Business getBusinessById(Integer businessid) {
-        Objects.requireNonNull(businessid);
+//        Objects.requireNonNull(businessid);
         Business business = businessMapper.selectByPrimaryKey(businessid);
         return business;
     }

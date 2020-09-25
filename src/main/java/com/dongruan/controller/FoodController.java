@@ -40,8 +40,8 @@ public class FoodController {
     @PostMapping()
     public Msg addFood(@ApiParam("Food对象") Food food, @ApiParam("食物图片") MultipartFile multipartFile) throws IOException {
         String uuid = UUID.randomUUID().toString();
-        multipartFile.transferTo(new File("S:\\待处理\\elm\\"+uuid));
-        String base64String = BaseUtils.getBase64String(new File("S:\\待处理\\elm\\"+uuid));
+        multipartFile.transferTo(new File("E:\\图片资源\\"+uuid));
+        String base64String = BaseUtils.getBase64String(new File("E:\\图片资源\\"+uuid));
         food.setFoodimg(base64String);
         foodService.addFood(food);
         return new Msg().success();

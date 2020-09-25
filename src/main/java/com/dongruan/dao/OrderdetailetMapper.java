@@ -1,10 +1,13 @@
 package com.dongruan.dao;
 
+import com.dongruan.bean.OrderDetailsExt;
 import com.dongruan.bean.Orderdetailet;
 import com.dongruan.bean.OrderdetailetExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface OrderdetailetMapper {
     long countByExample(OrderdetailetExample example);
 
@@ -27,4 +30,7 @@ public interface OrderdetailetMapper {
     int updateByPrimaryKeySelective(Orderdetailet record);
 
     int updateByPrimaryKey(Orderdetailet record);
+
+
+    List<OrderDetailsExt> getOrderDetailsExt (@Param("orderid")Integer orderid,@Param("userid") String userid);
 }

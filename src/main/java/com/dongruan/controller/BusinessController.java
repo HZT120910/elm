@@ -63,14 +63,17 @@ public class BusinessController {
         //先把上传的文件保存到E盘这个目录下
         String fileName = System.currentTimeMillis()+ new Random().nextInt(9999)+".jpg";
         System.out.println(business);
-        multipartFile.transferTo(new File("E:\\图片资源\\"+fileName));
-        File file = new File("E:\\图片资源\\"+fileName);
+        if(multipartFile==null){
+            return Msg.fail();
+        }else {
+            multipartFile.transferTo(new File("E:\\图片资源\\"+fileName));
+            File file = new File("E:\\图片资源\\"+fileName);
 //        把文件转成base64编码的字符串
-        String base64String = BaseUtils.getBase64String(file);
-        business.setBusinessimg(base64String);
-        businessServise.addBusiness(business);
-        return Msg.success();
-
+            String base64String = BaseUtils.getBase64String(file);
+            business.setBusinessimg(base64String);
+            businessServise.addBusiness(business);
+            return Msg.success();
+        }
     }
 
     /**
@@ -86,16 +89,22 @@ public class BusinessController {
     }
 
 
-    @PutMapping("{id}")
+    @PostMapping("{id}")
     @ApiOperation("通过id更新一个商家")
     public Msg updateBusiness(@ApiParam("传入商家id")@PathVariable("id") Integer businessid, Business business,MultipartFile multipartFile) throws IOException {
-        //先把上传的文件保存到E盘这个目录下
-        String fileName = System.currentTimeMillis()+ new Random().nextInt(9999)+".jpg";
-        multipartFile.transferTo(new File("E:\\图片资源\\"+fileName));
-        File file = new File("E:\\图片资源\\"+fileName);
-        //把文件转成base64编码的字符串
-        String base64String = BaseUtils.getBase64String(file);
-        business.setBusinessimg(base64String);
+        if (multipartFile!=null){
+            //先把上传的文件保存到E盘这个目录下
+            String fileName = System.currentTimeMillis()+ new Random().nextInt(9999)+".jpg";
+            multipartFile.transferTo(new File("E:\\图片资源\\"+fileName));
+            File file = new File("E:\\图片资源\\"+fileName);
+            //把文件转成base64编码的字符串
+            String base64String = BaseUtils.getBase64String(file);
+            business.setBusinessimg(base64String);
+        }else {
+            Business businessById = businessServise.getBusinessById(businessid);
+            String businessimg = businessById.getBusinessimg();
+            business.setBusinessimg(businessimg);
+        }
         business.setBusinessid(businessid);
         businessServise.updataBusiness(business);
         return Msg.success();
